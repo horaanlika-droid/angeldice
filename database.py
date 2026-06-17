@@ -13,7 +13,6 @@ def init_db_sync():
             username TEXT,
             payment_tier INTEGER DEFAULT 0,
             rolls_left INTEGER DEFAULT 0,
-            last_roll_time INTEGER DEFAULT 0,
             used_rolls INTEGER DEFAULT 0
         )
     ''')
@@ -62,20 +61,6 @@ async def set_rolls_left(user_id: int, rolls: int):
 async def get_rolls_left(user_id: int) -> int:
     async with aiosqlite.connect(DB_NAME) as db:
         async with db.execute("SELECT rolls_left FROM players WHERE user_id = ?", (user_id,)) as cursor:
-            row = await cursor.fetchone()
-            return row[0] if row else 0
-
-async def set_last_roll_time(user_id: int, timestamp: int):
-    async with aiosqlite.connect(DB_NAME) as db:
-        await db.execute(
-            "UPDATE players SET last_roll_time = ? WHERE user_id = ?",
-            (timestamp, user_id)
-        )
-        await db.commit()
-
-async def get_last_roll_time(user_id: int) -> int:
-    async with aiosqlite.connect(DB_NAME) as db:
-        async with db.execute("SELECT last_roll_time FROM players WHERE user_id = ?", (user_id,)) as cursor:
             row = await cursor.fetchone()
             return row[0] if row else 0
 
