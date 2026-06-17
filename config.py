@@ -1,0 +1,3 @@
+BOT_TOKEN = "8589540049:AAGzDXbC2BIbtmV4XEqOqeIObrqxkAb_Uv0"
+
+ADMIN_IDS = [7696853696]  # Админ кубиков
